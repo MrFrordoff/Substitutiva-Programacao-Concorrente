@@ -1,39 +1,27 @@
 package substitutiva.com.br;
 
-import java.util.DoubleSummaryStatistics;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class TemperatureData {
-    private Map<String, DoubleSummaryStatistics> dailyStats;
+    private double dailyAverage;
+    private double dailyMin;
+    private double dailyMax;
 
-    public TemperatureData(Map<String, DoubleSummaryStatistics> dailyStats) {
-        this.dailyStats = dailyStats;
+    public TemperatureData(List<Double> temperatures) {
+        this.dailyAverage = temperatures.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
+        this.dailyMin = temperatures.stream().mapToDouble(Double::doubleValue).min().orElse(Double.NaN);
+        this.dailyMax = temperatures.stream().mapToDouble(Double::doubleValue).max().orElse(Double.NaN);
     }
 
-    public static TemperatureData processWeatherData(String jsonResponse) {
-        List<Double> temperatures = parseJsonResponse(jsonResponse);
-
-        Map<String, DoubleSummaryStatistics> dailyStats = temperatures.stream()
-                .collect(Collectors.groupingBy(
-                        temp -> getDateFromTimestamp(temp.getTimestamp()),
-                        Collectors.summarizingDouble(Double::doubleValue)
-                ));
-
-        return new TemperatureData(dailyStats);
+    public double getDailyAverage() {
+        return dailyAverage;
     }
 
-    private static List<Double> parseJsonResponse(String jsonResponse) {
-        // Implementação para parsear a resposta JSON
+    public double getDailyMin() {
+        return dailyMin;
     }
 
-    private static String getDateFromTimestamp(long timestamp) {
-        // Implementação para extrair a data de um timestamp
-    }
-
-    @Override
-    public String toString() {
-        // Implementação do método toString para exibir os dados
+    public double getDailyMax() {
+        return dailyMax;
     }
 }
