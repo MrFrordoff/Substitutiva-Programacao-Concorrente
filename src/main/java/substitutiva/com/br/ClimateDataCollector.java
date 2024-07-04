@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class ClimateDataCollector {
-    private static final String API_URL_TEMPLATE = "https://api.open-meteo.com/v1/forecast?latitude=%s&longitude=%s&hourly=temperature_2m&start=2024-01-01T00:00:00Z&end=2024-01-31T23:00:00Z";
+    private static final String API_URL_TEMPLATE = "https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=-10.9167&longitude=37.05&start_date=2024-01-01&end_date=2024-01-31&hourly=temperature_2m";
     private static final Gson gson = new Gson();
 
     public static void main(String[] args) throws Exception {
